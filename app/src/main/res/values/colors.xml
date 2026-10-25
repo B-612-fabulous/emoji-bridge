@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 李跳跳式极简配色：墨绿主色 + 玫红强调 + 灰阶文字 -->
+    <color name="primary">#3E7C5F</color>
+    <color name="primary_dark">#2E5E47</color>
+    <color name="primary_surface">#F1F6F3</color>
+    <color name="accent">#F56066</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
+    <color name="page_bg">#FFFFFFFF</color>
+    <color name="page_bg_dark">#121212</color>
+    <color name="status_card_bg">#F5F6F8</color>
+    <color name="text_primary">#1B1B1F</color>
+    <color name="text_secondary">#8A8A8E</color>
+    <color name="icon_tint">#1B1B1F</color>
+    <color name="danger">#E5484D</color>
+    <!-- 底部导航选中色（深色模式下另有覆盖） -->
+    <color name="nav_selected">#3E7C5F</color>
+</resources>

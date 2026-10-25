@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>eb-harness</title>
+<style>
+  html,body{margin:0;padding:0;background:#fff;font-family:-apple-system,"PingFang SC",sans-serif}
+  #root{min-height:1800px}
+  .hdr{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #eee}
+  .login-entry{cursor:pointer;font-size:15px;color:#161823;margin:0}
+  .feed{padding:16px}
+  .card{height:120px;background:#f5f5f7;margin-bottom:12px;border-radius:8px}
+  #douyin-login-new-id{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:360px;padding:20px;background:#fff;border-radius:12px;z-index:9999;
+    box-shadow:0 8px 40px rgba(0,0,0,.2)}
+  #douyin-login-new-id .close{position:absolute;right:12px;top:12px;cursor:pointer;line-height:0}
+  #douyin-login-new-id .close svg{display:block}
+  #douyin-login-new-id h3{margin:0 0 8px;font-size:18px}
+  #douyin-login-new-id .tabs{display:flex;gap:16px;margin:8px 0;font-size:14px}
+  #douyin-login-new-id .tab{cursor:pointer;color:#666;padding:2px 0}
+  #douyin-login-new-id .tab.on{color:#FE2C55;font-weight:600}
+  #douyin-login-new-id input{width:100%;height:36px;box-sizing:border-box;margin-top:12px}
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="hdr">
+    <span class="logo">抖音</span>
+    <!-- 关键：真实桌面版这个「登录」是 <p>，不是 a/button/div/span -->
+    <p class="VQdYTqcZ login-entry">登录</p>
+  </div>
+  <div class="feed">
+    <div class="card"></div><div class="card"></div><div class="card"></div>
+  </div>
+</div>
+
+<pre id="__out">PENDING</pre>
+
+<script src="mock-douyin.js"></script>
+<script src="driver.js"></script>
+</body>
+</html>

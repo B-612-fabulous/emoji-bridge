@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    根布局必须是 FrameLayout，不能是垂直 LinearLayout。
+    踩过的坑（0.8.5）：warmup_host 当时是垂直 LinearLayout 的第一个子节点、
+    高度 match_parent —— 在垂直 LinearLayout 里第一个 match_parent 高度的孩子
+    会把剩余高度几乎全占掉，page_container（0dp+weight）被压成 0 高、
+    底部导航被挤出屏幕，用户看到「标题栏 + 一片空白」，即「页面打不开」。
+    FrameLayout 里孩子按 Z 序叠，谁都不会挤谁。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_bg">
+
+    <!--
+        抖音登录页的后台预热容器（见 WebViewWarmup）。放在内容下层，
+        三个设置都有讲究，别改：
+          · visibility="invisible"：保留 measure/layout（WebView 的布局视口
+            就是它的宽高，缩成 1x1 会让抖音的 980px 桌面布局被压成一条线，
+            登录遮罩的反向缩放会算错），同时不接收任何触摸事件。
+            曾经用 alpha=0 —— alpha=0 的视图照样吃触摸，会抢走点击。
+          · 铺满：同上，视口必须和登录页里一致。
+    -->
+    <FrameLayout
+        android:id="@+id/warmup_host"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <!-- 内容层：标题栏 + 页面容器 + 底部导航，叠在预热容器之上 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="18dp">
+
+            <TextView
+                android:id="@+id/title_app_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_theme"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_theme"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_light_mode"
+                android:tint="@color/white" />
+        </LinearLayout>
+
+        <!-- 页面容器：首页 / 表情 / 更多 三个页面在这里切换（隐藏/显示，不做 Fragment） -->
+        <FrameLayout
+            android:id="@+id/page_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 底部导航：微信式三个按钮 -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/page_bg"
+            app:itemIconTint="@color/nav_item_tint"
+            app:itemTextColor="@color/nav_item_tint"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_main" />
+    </LinearLayout>
+</FrameLayout>

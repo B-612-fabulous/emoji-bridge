@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>mock douyin</title>
+<style>
+  html,body{margin:0;padding:0;background:#fff;font-family:-apple-system,"PingFang SC",sans-serif}
+  #root{min-height:1800px}
+  .hdr{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #eee}
+  .login-entry{cursor:pointer;font-size:15px;color:#161823;margin:0}
+  .feed{padding:16px}
+  .card{height:120px;background:#f5f5f7;margin-bottom:12px;border-radius:8px}
+  /* 抖音真实的登录面板：一个居中的 fixed 容器，里面有自己的关闭按钮 */
+  #douyin-login-new-id{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:360px;padding:20px;background:#fff;border-radius:12px;z-index:9999;
+    box-shadow:0 8px 40px rgba(0,0,0,.2)}
+  #douyin-login-new-id .close{position:absolute;right:12px;top:12px;cursor:pointer;line-height:0}
+  #douyin-login-new-id .close svg{display:block}
+  #douyin-login-new-id h3{margin:0 0 8px;font-size:18px}
+  #douyin-login-new-id input{width:100%;height:36px;box-sizing:border-box;margin-top:12px}
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="hdr">
+    <span class="logo">抖音</span>
+    <!-- 关键：真实桌面版这个「登录」是 <p>，不是 a/button/div/span -->
+    <p class="VQdYTqcZ login-entry">登录</p>
+  </div>
+  <div class="feed">
+    <div class="card"></div><div class="card"></div><div class="card"></div>
+  </div>
+</div>
+
+<script>
+  // ---- 模拟抖音的登录弹窗行为 ----
+  // 入口点击 = 开关：开着就关，关着就开（和线上一致，所以多点一次会把弹窗关掉）
+  var entry = document.querySelector('.login-entry');
+  entry.addEventListener('click', function () {
+    if (document.getElementById('douyin-login-new-id')) { __mock.close(); return; }
+    __mock.open();
+  });
+
+  var __mock = {
+    openTimes: 0,
+    closeTimes: 0,
+    open: function () {
+      if (document.getElementById('douyin-login-new-id')) return;
+      var d = document.createElement('div');
+      d.id = 'douyin-login-new-id';
+      d.className = 'douyin_login_new_class';
+      d.innerHTML =
+          '<div class="close"><svg width="37" height="36" viewBox="0 0 37 36">'
+        + '<path d="M9 8 L28 27 M28 8 L9 27" stroke="#666" stroke-width="2" fill="none"/></svg></div>'
+        + '<h3>扫码登录</h3><p>打开抖音 App 扫一扫</p>'
+        + '<input id="dy-phone" placeholder="手机号"><button>获取验证码</button>';
+      // 关闭：只移除节点，和 React 卸载一致
+      d.querySelector('.close').addEventListener('click', function () { __mock.close(); });
+      document.body.appendChild(d);
+      __mock.openTimes++;
+    },
+    close: function () {
+      var d = document.getElementById('douyin-login-new-id');
+      if (d) { d.remove(); __mock.closeTimes++; }
+    },
+    // 模拟 React 重建：旧节点整棵摘掉，新节点插进来（保留同一个 id）
+    rebuild: function () {
+      var d = document.getElementById('douyin-login-new-id');
+      if (!d) return;
+      var parent = d.parentNode;
+      d.remove();
+      var n = document.createElement('div');
+      n.id = 'douyin-login-new-id';
+      n.className = 'douyin_login_new_class';
+      n.innerHTML = d.innerHTML;
+      n.querySelector('.close').addEventListener('click', function () { __mock.close(); });
+      parent.appendChild(n);
+      __mock.openTimes++;
+    }
+  };
+  window.__mock = __mock;
+
+  // 抖音会随手插一堆 position:fixed 的无障碍节点（1px / 屏幕外），
+  // 曾经被误判成登录弹窗，导致遮罩被设成 pointer-events:none，按钮点不动。
+  setTimeout(function () {
+    var a = document.createElement('div');
+    a.id = 'a11y-open-btn';
+    a.textContent = '无障碍按钮';
+    a.style.cssText = 'position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden';
+    document.body.appendChild(a);
+    var b = document.createElement('div');
+    b.id = 'a11y-live-assertive';
+    b.style.cssText = 'position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden';
+    document.body.appendChild(b);
+  }, 120);
+</script>
+</body>
+</html>

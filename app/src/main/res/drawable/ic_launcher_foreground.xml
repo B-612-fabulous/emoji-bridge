@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标前景：拱桥 + 桥面上的表情。
+  构图居中，整体落在半径 33 的安全圆内，圆形遮罩下不会被裁。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 桥面 -->
+    <path
+        android:pathData="M27.5,52 L80.5,52 A3.5,3.5 0 0 1 80.5,59 L27.5,59 A3.5,3.5 0 0 1 27.5,52 z"
+        android:fillColor="#FFFFFFFF" />
+
+    <!-- 桥拱 -->
+    <path
+        android:pathData="M34,78 A20,20 0 0 1 74,78"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round" />
+
+    <!-- 桥上的表情：黄色圆脸 -->
+    <path
+        android:pathData="M54,38 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0"
+        android:fillColor="#FFFFCC4D" />
+    <path
+        android:pathData="M49.5,35.5 m-1.7,0 a1.7,1.7 0 1,0 3.4,0 a1.7,1.7 0 1,0 -3.4,0"
+        android:fillColor="#FF4A3200" />
+    <path
+        android:pathData="M58.5,35.5 m-1.7,0 a1.7,1.7 0 1,0 3.4,0 a1.7,1.7 0 1,0 -3.4,0"
+        android:fillColor="#FF4A3200" />
+    <path
+        android:pathData="M48.5,41 Q54,45.5 59.5,41"
+        android:fillColor="#00000000"
+        android:strokeColor="#FF4A3200"
+        android:strokeWidth="1.9"
+        android:strokeLineCap="round" />
+</vector>

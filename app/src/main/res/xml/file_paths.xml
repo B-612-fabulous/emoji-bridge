@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- 转发给微信时，把转换后的图片临时写到 cache/shared 再授权出去 -->
+    <cache-path
+        name="shared"
+        path="shared/" />
+</paths>

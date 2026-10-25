@@ -1,0 +1,31 @@
+# 签名算法（a_bogus）的具体实现不随开源仓库分发，见 crypto/Signers.java 说明
+app/src/main/java/com/example/emojibridge/crypto/ABogus.java
+
+# 打赏收款码：属于个人收款信息，不随仓库分发
+# （微信码图片；支付宝链接在 local.properties 的 donate.alipay.qr 里）
+app/src/main/res/drawable/ic_donate_wechat.*
+app/src/main/res/drawable-*/ic_donate_wechat.*
+
+# 签名文件与密钥：绝对不要提交
+*.jks
+*.keystore
+*.p12
+keystore.properties
+
+# 构建产物与本地配置
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db

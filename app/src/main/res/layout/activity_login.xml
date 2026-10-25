@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!--
+            WebView 容器：里面放的是预热好的那个 WebView（见 WebViewWarmup），
+            没有预热时才自己 new 一个。用容器而不是直接写 <WebView>，
+            是为了能把「已经在后台跑完抖音登录页」的那个实例整体搬进来。
+        -->
+        <FrameLayout
+            android:id="@+id/webview_host"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--
+            不透明全屏封面：盖在 WebView 之上。
+            WebView 一直在底下渲染，等登录遮罩稳定绘制出来后再揭开这层，
+            用户全程看不到抖音首页的任何一帧（避免「闪一下抖音网页」）。
+            顺序很关键：放在 WebView 之后才会画在它上面。
+        -->
+        <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/page_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:indeterminateTint="@color/primary" />
+
+            <TextView
+                android:id="@+id/loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:paddingHorizontal="32dp"
+                android:text="@string/login_loading"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <!-- 只在超时后出现，给用户一条退路，而不是无限转圈 -->
+            <Button
+                android:id="@+id/btn_retry"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/btn_retry"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        style="?attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_login_cancel"
+        android:textColor="@color/text_secondary" />
+</LinearLayout>

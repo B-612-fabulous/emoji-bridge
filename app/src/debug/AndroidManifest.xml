@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    只对 debug 包生效：把 LoginActivity 开放出来，好让 adb / 自动化脚本
+    直接 `am start` 拉起登录页做回归测试（release 包保持不导出）。
+    登录页本身不对外暴露数据：cookie 在 WebView 里同源隔离，外部进程读不到；
+    二维码保存/分享都是用户在页面里点按钮才触发。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            tools:replace="android:exported" />
+    </application>
+</manifest>
